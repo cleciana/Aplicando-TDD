@@ -26,8 +26,11 @@ public class TesteFatura {
 	
 	@Test
 	public void testPagamentoTotal() {
-		fatura2.processaPagamentos(boletos2);
-		assertEquals(0.00, fatura2.getValorTotal());
+		fatura1.processaPagamentos(boletos1);
+		assertEquals(0.00, fatura1.getValorTotal(), 0.00);
 	}
-	
+	@Test
+	public void testPagamentoParcial() {
+		
+	}
 }
