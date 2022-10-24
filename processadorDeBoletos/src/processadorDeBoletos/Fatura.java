@@ -6,16 +6,20 @@ import java.util.ArrayList;
 public class Fatura {
 	
 	private double valorTotal;
+	private String status = "ABERTA";
 	
 	public Fatura(LocalDate now, double valor, String cliente) {
 		this.valorTotal = valor;
 	}
 
-	public double processaPagamentos(ArrayList<Boleto> boletos) {
+	public void processaPagamentos(ArrayList<Boleto> boletos) {
+		double totalPagamentos = 0.00;
 		for (Boleto boleto : boletos) {
-			this.valorTotal -= boleto.getValorPago();
+			totalPagamentos += boleto.getValorPago();
 		}
-		return this.getValorTotal();
+		if (totalPagamentos == this.getValorTotal()) {
+			this.status = "PAGA";
+		}
 	}
 
 	public double getValorTotal() {
@@ -23,10 +27,7 @@ public class Fatura {
 	}
 
 	public String getStatus() {
-		if (this.getValorTotal() == 0.00) {
-			return "PAGA";
-		}
-		return "NAO PAGA";
+		return this.status;
 	}
 
 }

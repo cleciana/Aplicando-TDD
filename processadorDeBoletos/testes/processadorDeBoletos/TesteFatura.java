@@ -32,7 +32,6 @@ public class TesteFatura {
 		boletos.add(boleto2);
 		boletos.add(boleto3);
 		fatura1.processaPagamentos(boletos);
-		assertEquals(0.00, fatura1.getValorTotal(), 0.00);
 		assertEquals("PAGA", fatura1.getStatus());
 	}
 	
@@ -40,8 +39,7 @@ public class TesteFatura {
 	public void testPagamentoParcial() {
 		boletos.add(boleto4);
 		fatura2.processaPagamentos(boletos);
-		assertEquals(150, fatura2.getValorTotal(), 0.00);
-		assertEquals("NAO PAGA", fatura2.getStatus());
+		assertEquals("ABERTA", fatura2.getStatus());
 	}
 	
 }
