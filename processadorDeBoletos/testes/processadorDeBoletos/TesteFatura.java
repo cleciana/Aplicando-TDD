@@ -10,27 +10,38 @@ import org.junit.Test;
 
 public class TesteFatura {
 	
-	Fatura fatura1;
-	Boleto boleto1, boleto2;
-	ArrayList<Boleto> boletos1;
+	Fatura fatura1, fatura2;
+	Boleto boleto1, boleto2, boleto3, boleto4, boleto5;
+	ArrayList<Boleto> boletos;
 	
 	@Before
 	public void before() {
 		fatura1 = new Fatura(LocalDate.now(), 1500.00, "João");
-		boleto1 = new Boleto(LocalDate.now(), 700.00);
-		boleto2 = new Boleto(LocalDate.now(), 800.00);
-		boletos1 = new ArrayList<Boleto>();
-		boletos1.add(boleto1);
-		boletos1.add(boleto2);
+		fatura2 = new Fatura(LocalDate.now(), 700.00, "Maria");
+		boleto1 = new Boleto(LocalDate.now(), 400.00);
+		boleto2 = new Boleto(LocalDate.now(), 500.00);
+		boleto3 = new Boleto(LocalDate.now(), 600.00);
+		boleto4 = new Boleto(LocalDate.now(), 550.00);
+		boleto5 = new Boleto(LocalDate.now(), 200.00);
+		boletos = new ArrayList<Boleto>();
+	}
+
+	@Test
+	public void testPagamentoTotal() {
+		boletos.add(boleto1);
+		boletos.add(boleto2);
+		boletos.add(boleto3);
+		fatura1.processaPagamentos(boletos);
+		assertEquals(0.00, fatura1.getValorTotal(), 0.00);
+		assertEquals("PAGA", fatura1.getStatus());
 	}
 	
 	@Test
-	public void testPagamentoTotal() {
-		fatura1.processaPagamentos(boletos1);
-		assertEquals(0.00, fatura1.getValorTotal(), 0.00);
-	}
-	@Test
 	public void testPagamentoParcial() {
-		
+		boletos.add(boleto4);
+		fatura2.processaPagamentos(boletos);
+		assertEquals(150, fatura2.getValorTotal(), 0.00);
+		assertEquals("NAO PAGA", fatura2.getStatus());
 	}
+	
 }
