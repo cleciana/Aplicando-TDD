@@ -8,7 +8,8 @@ public class TesteBoleto {
 
 	@Test
 	public void test() {
-		fail("Not yet implemented");
+		Boleto boleto = new Boleto(500.00);
+		assertTrue(boleto.getValorPago() == 500.00);
 	}
 
 }
