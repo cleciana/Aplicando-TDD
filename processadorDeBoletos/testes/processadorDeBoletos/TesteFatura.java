@@ -13,9 +13,11 @@ public class TesteFatura {
 	Fatura fatura1, fatura2;
 	Boleto boleto1, boleto2, boleto3, boleto4;
 	ArrayList<Boleto> boletos1, boletos2;
+	ProcessadorDeBoletos processador;
 	
 	@Before
 	public void before() {
+		processador = new ProcessadorDeBoletos();
 		fatura1 = new Fatura(LocalDate.now(), 1500.00, "Marcelinho");
 		fatura2 = new Fatura(LocalDate.now(), 700.00, "Laurinha Lero");
 		boleto1 = new Boleto(LocalDate.now(), 400.00);
@@ -26,25 +28,25 @@ public class TesteFatura {
 		boletos1.add(boleto1);
 		boletos1.add(boleto2);
 		boletos1.add(boleto3);
-		boletos2.add(boleto1);	
+		boletos2.add(boleto1);
 	}
 
 	@Test
 	public void testePagamentoTotal() {
-		fatura1.processaPagamentos(boletos1);
+		processador.processaPagamentos(fatura1, boletos1);
 		assertEquals("PAGA", fatura1.getStatus());
 	}
 	
 	@Test
 	public void testePagamentoParcial() {
-		fatura2.processaPagamentos(boletos2);
+		processador.processaPagamentos(fatura2, boletos2);
 		assertNull(fatura2.getStatus());
 	}
 	
 	@Test
 	public void testePagamentosCriados() {
-		fatura1.processaPagamentos(boletos1);
-		fatura2.processaPagamentos(boletos2);
+		processador.processaPagamentos(fatura1, boletos1);
+		processador.processaPagamentos(fatura2, boletos2);
 		assertEquals(3, fatura1.getPagamentos().size());
 		assertEquals(1, fatura2.getPagamentos().size());
 	}

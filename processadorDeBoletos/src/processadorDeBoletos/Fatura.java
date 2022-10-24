@@ -19,23 +19,6 @@ public class Fatura {
 		this.pagamentos = new ArrayList<Pagamento>();
 	}
 
-	public void processaPagamentos(ArrayList<Boleto> boletos) {
-		
-		double totalPagamentos = 0.00;
-		
-		for (Boleto boleto : boletos) {
-			
-			double valorPagamento = boleto.getValorPago();
-			
-			Pagamento novoPagamento = new Pagamento(valorPagamento, LocalDate.now());
-			this.pagamentos.add(novoPagamento);
-			
-			totalPagamentos += valorPagamento;
-		}
-		
-		if (totalPagamentos == this.getValorTotal()) this.status = "PAGA";		
-	}
-
 	public double getValorTotal() {
 		return this.valorTotal;
 	}
@@ -46,6 +29,11 @@ public class Fatura {
 
 	public ArrayList<Pagamento> getPagamentos() {
 		return this.pagamentos;
+	}
+
+	public void setStatus(String statusPgto) {
+		this.status = statusPgto;
+		
 	}
 
 }
