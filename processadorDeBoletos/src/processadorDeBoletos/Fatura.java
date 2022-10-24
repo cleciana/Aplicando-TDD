@@ -5,14 +5,18 @@ import java.util.ArrayList;
 
 public class Fatura {
 	
+	private LocalDate data;
 	private double valorTotal;
+	private String nomeCliente;
 	private String status;
 	private ArrayList<Pagamento> pagamentos;
+
 	
-	public Fatura(LocalDate data, double valor, String cliente) {
-		this.valorTotal = valor;
+	public Fatura(LocalDate data, double valorTotal, String cliente) {
+		this.data = data;
+		this.valorTotal = valorTotal;
+		this.nomeCliente = cliente;
 		this.pagamentos = new ArrayList<Pagamento>();
-		this.status= "ABERTA";
 	}
 
 	public void processaPagamentos(ArrayList<Boleto> boletos) {
@@ -23,14 +27,13 @@ public class Fatura {
 			
 			double valorPagamento = boleto.getValorPago();
 			
-			Pagamento novoPagamento = new Pagamento(valorPagamento);
+			Pagamento novoPagamento = new Pagamento(valorPagamento, LocalDate.now());
 			this.pagamentos.add(novoPagamento);
 			
 			totalPagamentos += valorPagamento;
 		}
-		if (totalPagamentos == this.getValorTotal()) {
-			this.status = "PAGA";
-		}
+		
+		if (totalPagamentos == this.getValorTotal()) this.status = "PAGA";		
 	}
 
 	public double getValorTotal() {
